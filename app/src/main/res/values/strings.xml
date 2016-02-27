@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Raspberry Pi Car Controller</string>
+    <string name="action_settings">Settings</string>
+</resources>
