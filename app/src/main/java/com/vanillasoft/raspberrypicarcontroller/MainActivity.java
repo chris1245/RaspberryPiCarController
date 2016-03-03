@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.InputDevice;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vanillasoft.raspberrypicarcontroller.inputmanagercompat.InputManagerCompat.InputDeviceListener;
-import com.vanillasoft.raspberrypicarcontroller.inputmanagercompat.InputManagerV16;
 
 public class MainActivity extends AppCompatActivity implements InputDeviceListener {
     private TextView dpadTextView;
@@ -29,7 +27,13 @@ public class MainActivity extends AppCompatActivity implements InputDeviceListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.setInmersiveMode();
+        this.setImmersiveMode();
+        this.initializeWebCamView();
+        leftStickTextView = (TextView) findViewById(R.id.left_stick);
+        rightStickTextView = (TextView) findViewById(R.id.right_stick);
+    }
+
+    private void initializeWebCamView() {
         webview = (WebView) findViewById(R.id.webview);
         final Activity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
@@ -45,11 +49,9 @@ public class MainActivity extends AppCompatActivity implements InputDeviceListen
             }
         });
         webview.loadUrl("http://10.0.1.12:8080/?action=stream");
-        leftStickTextView = (TextView) findViewById(R.id.left_stick);
-        rightStickTextView = (TextView) findViewById(R.id.right_stick);
     }
 
-    private void setInmersiveMode() {
+    private void setImmersiveMode() {
         getWindow().getDecorView().setSystemUiVisibility(
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
