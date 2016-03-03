@@ -22,12 +22,13 @@ public class MainActivity extends AppCompatActivity implements InputDeviceListen
     private TextView dpadTextView;
     private TextView leftStickTextView;
     private TextView rightStickTextView;
+    private WebView webview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        WebView webview = (WebView) findViewById(R.id.webview);
+        webview = (WebView) findViewById(R.id.webview);
         final Activity activity = this;
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
@@ -42,9 +43,14 @@ public class MainActivity extends AppCompatActivity implements InputDeviceListen
             }
         });
         webview.loadUrl("http://10.0.1.12:8080/?action=stream");
-        //webview.loadUrl("http://www.google.com.mx");
         leftStickTextView = (TextView) findViewById(R.id.left_stick);
         rightStickTextView = (TextView) findViewById(R.id.right_stick);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        webview.reload();
     }
 
     @Override
